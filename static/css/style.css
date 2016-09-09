@@ -1,0 +1,60 @@
+body {
+	background: pink;
+	padding: 0;
+	margin: 0;
+}
+* {
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-transition: all 0.5s;
+}
+div.left {
+	position: relative;
+}
+div.header {
+	width: 100%;
+	background: red;
+	padding: 15px;
+}
+
+div.footer {
+	width: 100%;
+	background: purple;
+}
+div.content {
+	overflow: scroll;
+}
+div.right_slider {
+	background: green;
+	height: 100%;
+	width: 100%;
+}
+div.floats {
+	float: left;
+
+}
+div.left {
+	height: 100%;
+	width: 95%;
+}
+div.right {
+	height: 100%;
+	width: 5%;
+}
+body.wide div.right {
+	width: 25%;
+}
+body.wide div.left {
+	width: 75%;
+}
+html, body {
+	overflow: hidden;
+}
+span.rightbutton {
+	position: absolute;
+	top: 0;
+	right: 0;
+	background: purple;
+}
