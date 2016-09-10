@@ -28,6 +28,7 @@ Add new widgets that say how much time total (for all sections) and how far you 
     <script>
         $(document).ready(function(){
 
+            localStorage.setItem('book_list_loaded', "");
             $("#jquery_jplayer_1").jPlayer({
                 ready: function () {
                     //$(this).jPlayer("setMedia", {
@@ -105,6 +106,8 @@ Add new widgets that say how much time total (for all sections) and how far you 
         }
 
         function get_book_list() {
+
+          localStorage.setItem('book_list_loaded', 1);
           $('#book_container').hide();
           $('#loading_container').show();
             $.ajax({
@@ -149,6 +152,18 @@ Add new widgets that say how much time total (for all sections) and how far you 
             $('#book_list_container').show();
         }
 
+        function back_to_list() {
+          localStorage.setItem('open_book', "");
+          if (localStorage.getItem('book_list_loaded')) {
+            $('#book_container').hide();
+            $('#book_list_container').show();
+            $('#loading_container').hide();
+          }
+          else {
+            get_book_list();
+          }
+        }
+
     </script>
   </head>
 
@@ -174,7 +189,7 @@ Add new widgets that say how much time total (for all sections) and how far you 
 
 
   <div id="book_container" style="display:none;">
-    <h2 id="book_name">Book</h2>
+    <h2 id="book_name">Book</h2><button onclick="back_to_list()">Back</button>
 
 
 
