@@ -1,3 +1,7 @@
+Next Steps:
+
+On player, condense down to just PLAY/PAUSE and VOLUME
+Add new widgets that say how much time total (for all sections) and how far you are in time-wise.
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Starter Template for Bootstrap</title>
+    <title>AudioBooks</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/starter-template.css" rel="stylesheet">
@@ -62,11 +66,22 @@
             //});
 
 
-            get_book_list();
+            // Retrieve the object from storage
+            var open_book_id = localStorage.getItem('open_book');
+            if (open_book_id) {
+              get_book(open_book_id);
+            }
+            else {
+              get_book_list();
+            }
         });
 
 
         function get_book(id) {
+          $('#book_list_container').hide();
+          $('#loading_container').show();
+
+          localStorage.setItem('open_book', id);
           jQuery.ajax({
               type: "GET",
               url: '/get_book/'+id,
@@ -79,8 +94,8 @@
                         mp3: book.sections[0]
                     });
                   console.log("got book", book);
-                  $('#book_list_container').hide();
                   $('#book_container').show();
+                  $('#loading_container').hide();
               },
               error: function (e) {
                   console.log("error", e);
@@ -90,6 +105,8 @@
         }
 
         function get_book_list() {
+          $('#book_container').hide();
+          $('#loading_container').show();
             $.ajax({
                 url: 'https://librivox.org/api/feed/audiobooks/title/',
                 data: {
@@ -128,6 +145,8 @@
     </a>';
             });
             $('#book_list').html(htmlz);
+            $('#loading_container').hide();
+            $('#book_list_container').show();
         }
 
     </script>
@@ -138,13 +157,17 @@
 
 <div class="container">
 
-  <div id="book_list_container">
+  <div id="book_list_container" style="display:none;">
     <h2>Books</h2>
     <div class="list-group" id="book_list">
       <a href="#" class="list-group-item">
         <h4 class="list-group-item-heading">Loading...</h4>
       </a>
     </div>
+  </div>
+
+  <div id="loading_container">
+    <h2>Loading...</h2>
   </div>
 
 
